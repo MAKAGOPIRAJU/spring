@@ -7,18 +7,18 @@ import jakarta.persistence.*;
 public class Student {
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id; // primary key
+    private  Integer studentid; // primary key
 
     private String name;
 
     private String department;
 
     public Integer getId() {
-        return id;
+        return studentid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer studentid) {
+        this.studentid = studentid;
     }
 
     public String getName() {

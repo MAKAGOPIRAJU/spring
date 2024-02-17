@@ -1,6 +1,10 @@
 package LibraryManagement.demo.Service;
 
+import LibraryManagement.demo.Exceptions.LibraryCardNotExist;
+import LibraryManagement.demo.Exceptions.StudentNotExist;
+import LibraryManagement.demo.Model.LibraryCard;
 import LibraryManagement.demo.Model.Student;
+import LibraryManagement.demo.Repository.LibraryCardRepository;
 import LibraryManagement.demo.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,9 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private LibraryCardRepository libraryCardRepository;
 
     public Student addStudent(Student student) {
 
@@ -73,5 +80,38 @@ public class StudentService {
         }
 
         return ece;
+    }
+
+    public String assignCardToStudent(Integer libraryCardId , Integer studentId) throws Exception{
+
+        // get the librarycard and student
+
+        Optional<LibraryCard> optionalLibraryCard = libraryCardRepository.findById(libraryCardId);
+
+        if(optionalLibraryCard.isEmpty()) {
+            throw new LibraryCardNotExist("card with " + libraryCardId + "is not exist");
+        }
+
+        LibraryCard libraryCard = optionalLibraryCard.get();
+
+        // get the student
+
+        Optional<Student> optional= studentRepository.findById(studentId);
+
+        if(optional.isEmpty()) {
+            throw new StudentNotExist("student is not exist with  id " + studentId);
+        }
+
+        Student student = optional.get();
+
+        // assign librarycard to student
+
+        libraryCard.setStudent(student);
+
+        // here i updted something librarycard
+
+        libraryCardRepository.save(libraryCard); // save updated librarycard into database
+
+        return "student with " + studentId + " is successfully assigned with library card id " + libraryCardId;
     }
 }

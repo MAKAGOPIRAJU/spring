@@ -1,5 +1,6 @@
 package LibraryManagement.demo.Controller;
 
+import LibraryManagement.demo.Model.LibraryCard;
 import LibraryManagement.demo.Model.Student;
 import LibraryManagement.demo.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,21 @@ public class StudentController {
     public List<Student> eceStudents() {
 
         return studentService.eceStudents();
+    }
+
+     // connect the student ans libraycard
+
+    @GetMapping("/assigncard")
+    public String assignLibraryCardToStudent(@RequestParam("libraryCardId") Integer libraryCardId,
+                                             @RequestParam("studentId") Integer studentId) throws Exception{
+        try{
+            String res = studentService.assignCardToStudent(libraryCardId,studentId);
+            return res;
+        }
+        catch (Exception e) {
+            return e.getMessage();
+        }
+
     }
 
 

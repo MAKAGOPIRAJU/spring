@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class LibraryCard {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cardid;
 
     private String collegename;

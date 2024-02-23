@@ -1,5 +1,6 @@
 package LibraryManagement.demo.Controller;
 
+import LibraryManagement.demo.Enums.DepartMent;
 import LibraryManagement.demo.Model.LibraryCard;
 import LibraryManagement.demo.Model.Student;
 import LibraryManagement.demo.Service.StudentService;
@@ -78,6 +79,12 @@ public class StudentController {
             return e.getMessage();
         }
 
+    }
+
+    @GetMapping("/ece")
+    List<Student> allEceStudents(@RequestParam("department") String departMent) {
+
+        return studentService.allEceStudents(departMent);
     }
 
 

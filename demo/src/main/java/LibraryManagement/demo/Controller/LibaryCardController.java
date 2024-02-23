@@ -33,4 +33,17 @@ public class LibaryCardController {
             return new ResponseEntity(e.getMessage() , HttpStatus.BAD_REQUEST);
         }
     }
+
+    // BOOK DATABASE
+
+
+    // FILTERATIONS
+
+    // BOOK ISSUE CHECKING:
+    // LIBRARY CARD STATUS ACTIVE
+       // 1. BOOK ISSUE , DATE , EXPIRY DATE
+       // 1.1 WITHIN 10 DAYS 100
+       // 1.2 AFTER 10 TO 30 DAY 5
+       // 1.3 BOOK MISSING
+
 }

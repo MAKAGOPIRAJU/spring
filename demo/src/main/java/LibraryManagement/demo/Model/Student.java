@@ -13,6 +13,22 @@ public class Student {
 
     private String department;
 
+
+    // bidirectional mapping
+
+    // connected to child
+
+    @OneToOne(mappedBy = "student",cascade = CascadeType.ALL) // connect to child
+    private LibraryCard libraryCard;
+
+    public LibraryCard getLibraryCard() {
+        return libraryCard;
+    }
+
+    public void setLibraryCard(LibraryCard libraryCard) {
+        this.libraryCard = libraryCard;
+    }
+
     public Integer getId() {
         return studentid;
     }

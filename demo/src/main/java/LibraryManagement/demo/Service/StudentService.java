@@ -1,5 +1,6 @@
 package LibraryManagement.demo.Service;
 
+import LibraryManagement.demo.Enums.DepartMent;
 import LibraryManagement.demo.Exceptions.LibraryCardNotExist;
 import LibraryManagement.demo.Exceptions.StudentNotExist;
 import LibraryManagement.demo.Model.LibraryCard;
@@ -113,5 +114,17 @@ public class StudentService {
         libraryCardRepository.save(libraryCard); // save updated librarycard into database
 
         return "student with " + studentId + " is successfully assigned with library card id " + libraryCardId;
+    }
+
+    public  List<Student> allEceStudents(String departMent) {
+
+        List<Student> students = studentRepository.findStudentsByDepartment(departMent);
+
+        return students;
+    }
+
+    public Student findStudent(Integer studentId) {
+
+        return studentRepository.findStudentByStudentId(studentId);
     }
 }

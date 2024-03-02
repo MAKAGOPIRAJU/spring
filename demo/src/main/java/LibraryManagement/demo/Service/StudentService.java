@@ -1,15 +1,22 @@
 package LibraryManagement.demo.Service;
 
+import LibraryManagement.demo.Enums.CardStatus;
 import LibraryManagement.demo.Enums.DepartMent;
+import LibraryManagement.demo.Enums.Type;
 import LibraryManagement.demo.Exceptions.LibraryCardNotExist;
 import LibraryManagement.demo.Exceptions.StudentNotExist;
+import LibraryManagement.demo.Model.Book;
 import LibraryManagement.demo.Model.LibraryCard;
 import LibraryManagement.demo.Model.Student;
+import LibraryManagement.demo.Model.Transcation;
+import LibraryManagement.demo.Repository.BookRepository;
 import LibraryManagement.demo.Repository.LibraryCardRepository;
 import LibraryManagement.demo.Repository.StudentRepository;
+import LibraryManagement.demo.Repository.TranscationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +29,12 @@ public class StudentService {
 
     @Autowired
     private LibraryCardRepository libraryCardRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private TranscationRepository transcationRepository;
 
     public Student addStudent(Student student) {
 
@@ -116,15 +129,73 @@ public class StudentService {
         return "student with " + studentId + " is successfully assigned with library card id " + libraryCardId;
     }
 
-    public  List<Student> allEceStudents(String departMent) {
+//    public  List<Student> allEceStudents(String departMent) {
+//
+//        List<Student> students = studentRepository.findStudentsByDepartment(departMent);
+//
+//        return students;
+//    }
 
-        List<Student> students = studentRepository.findStudentsByDepartment(departMent);
+//    public Student findStudent(Integer studentId) {
+//
+//        return studentRepository.findStudentByStudentId(studentId);
+//    }
 
-        return students;
+    public String blockCard(Integer studentId) {
+
+        Student student = studentRepository.findById(studentId).get();
+
+        LibraryCard libraryCard = student.getLibraryCard();
+
+        libraryCard.setCardstatus(CardStatus.BLOCK);
+
+        student.setLibraryCard(libraryCard);
+
+        studentRepository.save(student);
+
+        return student.getName()+ " libracard blocked successfully";
     }
 
-    public Student findStudent(Integer studentId) {
+    public String bookAssign(Integer bookId , Integer studentId) {
 
-        return studentRepository.findStudentByStudentId(studentId);
+        // book
+
+        // student
+
+        // library card
+
+        // transaction create
+
+        Book book = bookRepository.findById(bookId).get();
+
+        Student student = studentRepository.findById(studentId).get();
+
+        LibraryCard libraryCard = student.getLibraryCard();
+
+        // Create Transcation
+
+
+        Transcation transcation = new Transcation();
+
+        transcation.setTranscationId(1);
+        transcation.setLibraryCardId(libraryCard.getCardid());
+        transcation.setFine(0);
+        transcation.setIssudeDate(LocalDate.now()); // book assign date
+
+        Type bookType = book.getType();
+
+        int noOfDays = 0;
+
+        if(bookType.toString().equals("ORDINARY")) noOfDays = 90;
+
+        if(bookType.toString().equals("ELITE")) noOfDays = 30;
+
+        if(bookType.toString().equals("PRIME")) noOfDays = 15;
+
+        transcation.setExpectedDate(LocalDate.now().plusDays(noOfDays));
+
+        transcationRepository.save(transcation);
+
+        return book.getBookName() + " is issued successfuully to " + student.getName();
     }
 }

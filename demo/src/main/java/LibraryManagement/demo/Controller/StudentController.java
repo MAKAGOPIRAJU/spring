@@ -81,11 +81,23 @@ public class StudentController {
 
     }
 
-    @GetMapping("/ece")
-    List<Student> allEceStudents(@RequestParam("department") String departMent) {
+    // block student librarycard
 
-        return studentService.allEceStudents(departMent);
+    @PutMapping("/update/{id}")
+    public String blockCard(@PathVariable("id")Integer id) {
+
+        return studentService.blockCard(id);
     }
+
+    // book issue
+    @PostMapping("/bookAssign")
+    public String bookAssign(@RequestParam("studentId") Integer studentId,
+                             @RequestParam("bookId")Integer bookId) {
+
+       return studentService.bookAssign(bookId,studentId);
+    }
+
+
 
 
 }

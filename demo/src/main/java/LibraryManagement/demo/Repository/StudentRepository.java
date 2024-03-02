@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student , Integer> {
 
-    List<Student> findStudentsByDepartment(String departMent);
-
-    Student findStudentByStudentId(Integer studentid);
+//    List<Student> findStudentsByDepartment(String departMent);
+//
+//    Student findStudentByStudentId(Integer studentid);
 
    // all apis exception handling
 

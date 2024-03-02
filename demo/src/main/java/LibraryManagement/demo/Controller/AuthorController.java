@@ -27,7 +27,6 @@ public class AuthorController {
 
         try {
             List<Book> list = authorService.bookList(authorId);
-
             return  list;
         }
        catch (Exception e) {

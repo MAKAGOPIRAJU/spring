@@ -53,13 +53,13 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Integer id) throws Exception{
 
-        try{
+        try
+        {
             return new ResponseEntity(userService.deleteUser(id),HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
 
 }

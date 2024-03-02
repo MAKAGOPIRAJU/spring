@@ -22,7 +22,7 @@ public class LibaryCardController {
     // get the student assign to the card
 
     @GetMapping("/getStudent/{cardId}")
-    public ResponseEntity getStudent(@PathVariable("cardId") Integer cardId)throws Exception{
+    public ResponseEntity getStudent(@PathVariable("cardId") Integer cardId) throws Exception{
 
         try{
 

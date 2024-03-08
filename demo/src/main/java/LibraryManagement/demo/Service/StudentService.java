@@ -14,6 +14,8 @@ import LibraryManagement.demo.Repository.LibraryCardRepository;
 import LibraryManagement.demo.Repository.StudentRepository;
 import LibraryManagement.demo.Repository.TranscationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,9 +38,32 @@ public class StudentService {
     @Autowired
     private TranscationRepository transcationRepository;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     public Student addStudent(Student student) {
 
         Student student1 = studentRepository.save(student);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+//        String body = "Hi " + follower.getUserName() + " !" + user.getUserName() + " add a job " +
+//                "you got this email because of you followed him";
+
+        mailMessage.setFrom("makasrinivasulu01@gmail.com"); // from which mail u want to send
+        mailMessage.setSubject(student.getName() + " your registered successfully to library!");//subject
+//        mailMessage.setText(body);//message in the box
+
+//        mailSender.send(mailMessage);
+
+        String body = "hello" + student.getName() + " " +
+                " as you already registered successfully now you can go through any books in this library!";
+
+        mailMessage.setText(body);
+
+        mailMessage.setTo("ganeshdigital006@gmail.com"); // to whom
+
+        javaMailSender.send(mailMessage);
 
         return  student1;
     }
